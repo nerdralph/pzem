@@ -1,0 +1,1 @@
+requires python3, pymodbus, and pyserial
