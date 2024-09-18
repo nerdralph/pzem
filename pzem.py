@@ -11,12 +11,13 @@ from pymodbus.client import ModbusSerialClient
 import serial.tools.list_ports as lp
 
 SADDR = 1                               # default slave address
-DBG = 0                                 # debug
 
 # read PZEM-004 family registers
 # return map of register values
-def regs_004(addr: int=SADDR) -> dict:
-    rs485 = ModbusSerialClient(port=dev, baudrate=9600)
+def regs_004(port: str="", addr: int=SADDR) -> dict:
+    if not port:
+        port = lp.comports()[0].device
+    rs485 = ModbusSerialClient(port=port, baudrate=9600)
     rs485.connect()
     # read 10 regs starting at address 0
     rsp = rs485.read_input_registers(0, count=10, slave=addr)
@@ -34,11 +35,7 @@ def regs_004(addr: int=SADDR) -> dict:
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        dev = lp.comports()[0].device
+        print(regs_004())
     else:
-        dev = sys.argv[1]
+        print(regs_004(port = sys.argv[1]))
 
-    if DBG:
-        print("using port", dev)
-
-    print(regs_004())
