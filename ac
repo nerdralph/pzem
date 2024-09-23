@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+# reads Peacefair PZEM-004, PZEM-014, and PZEM-016 AC power meters
+
+import pzem
+
+if __name__ == "__main__":
+    args=pzem.cli_args()
+    print(pzem.regs_004(**args))
+

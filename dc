@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+# reads Peacefair power meters
+# PZEM-003 and PZEM-017 DC power meters
+
+import pzem
+
+if __name__ == "__main__":
+    args=pzem.cli_args()
+    print(pzem.regs_003(**args))
+
